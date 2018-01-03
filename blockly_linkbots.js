@@ -276,7 +276,8 @@ Blockly.Blocks['linkbotjs_connect_id'] = {
 Blockly.JavaScript['linkbotjs_connect_id'] = function(block) {
     var variable_robot = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('ROBOT'), Blockly.Variables.NAME_TYPE);
     var text_robot_id = block.getFieldValue('ROBOT_ID').toUpperCase();
-    var code = variable_robot+ ' = await daemon.getRobot("'+text_robot_id+'");\n';
+    var code = 'var __daemon = await getDaemon();\n';
+    code +=     variable_robot+ ' = await __daemon.getRobot("'+text_robot_id+'");\n';
     code +=    '__robots.push('+variable_robot+');\n';
     return code;
 };
