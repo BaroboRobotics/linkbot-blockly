@@ -52,6 +52,99 @@ Blockly.Ch['linkbotjs_new_linkbot'] = function(block) {
   return [code, Blockly.Ch.ORDER_ATOMIC];
 };
 
+Blockly.Blocks['linkbotjs_connect'] = {
+    init: function() {
+        this.appendDummyInput()
+            .appendField(GhostFieldVariable("robot"), "LINKBOT")
+            .appendField("Connect");
+        this.setInputsInline(false);
+        this.setPreviousStatement(true);
+        this.setNextStatement(true, null);
+        this.setTooltip('');
+        this.setColour(210);
+        this.setHelpUrl('http://www.example.com/');
+    }
+};
+
+Blockly.JavaScript['linkbotjs_connect'] = function(block) {
+    var value_linkbot = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
+    var code = 
+value_linkbot + ` = ( function() {
+    var robots = Linkbots.acquire(1);
+    if ( robots.robots.length < 1 ) {
+        throw 'Not enough connected robots in robot manager.';
+    }
+    return robots.robots[0];
+})();
+
+`;
+    return code;
+};
+
+Blockly.Python['linkbotjs_connect'] = function(block) {
+    var value_linkbot = Blockly.Python.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
+    var code = value_linkbot + '.close()\n';
+    return code;
+};
+
+Blockly.Ch['linkbotjs_connect'] = function(block) {
+    var value_linkbot = Blockly.Ch.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
+    var code = value_linkbot + '.disconnect();\n';
+    return code;
+};
+
+Blockly.Cpp['linkbotjs_connect'] = function(block) {
+    var value_linkbot = Blockly.Cpp.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
+    var code = value_linkbot + '.disconnect();\n';
+    return code;
+};
+
+Blockly.Blocks['linkbotjs_connect_dropdown'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField(GhostFieldVariable("robot"), "ROBOT")
+        .appendField("Connect to ID:")
+        .appendField(new Blockly.FieldDropdown(function() {
+                var robots = Linkbots.getOrderedRobots();
+                var robotlist = [];
+                for(var i = 0; i < robots.length; i++) {
+                    robotlist.push([robots[i], robots[i]]);
+                }
+                robotlist.push(['NONE']);
+                return robotlist;
+            }), "ROBOT_ID");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(210);
+    this.setTooltip('');
+    this.setHelpUrl('http://www.example.com/');
+  }
+};
+
+Blockly.JavaScript['linkbotjs_connect_dropdown'] = function(block) {
+    var variable_robot = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('ROBOT'), Blockly.Variables.NAME_TYPE);
+    var text_robot_id = block.getFieldValue('ROBOT_ID').toUpperCase();
+    var code = variable_robot+' = await ( async function() {\n' +
+               '    var __daemon = await getDaemon();\n' + 
+               '    var __robot = await __daemon.getRobot(\''+text_robot_id+'\');\n' + 
+               '    __robot.wheelDiameter = 3.5;\n' + 
+               '    __robot.trackWidth = 3.7;\n' + 
+               '    simulator.proxyRobot(__robot, simulator.operations.getRobot("' + text_robot_id + '"));\n' +
+               '    return __robot;\n';
+    code +=    '})();\n';
+    return code;
+};
+
+Blockly.Python['linkbotjs_connect_dropdown'] = function(block) {
+    var variable_robot = Blockly.Python.variableDB_.getName(block.getFieldValue('ROBOT'), Blockly.Variables.NAME_TYPE);
+    var text_linkbot_id = block.getFieldValue('ROBOT_ID');
+    var code = variable_robot + ' = linkbot.Linkbot("'+text_linkbot_id+'")\n' + 
+               variable_robot + '.wheelDiameter = 3.5\n' + 
+               variable_robot + '.trackWidth = 3.7\n';
+    
+    return code;
+};
+
 Blockly.Blocks['linkbotjs_sleep'] = {
     init: function() {
         this.appendValueInput("Sleep")
@@ -276,9 +369,18 @@ Blockly.Blocks['linkbotjs_connect_id'] = {
 Blockly.JavaScript['linkbotjs_connect_id'] = function(block) {
     var variable_robot = Blockly.JavaScript.variableDB_.getName(block.getFieldValue('ROBOT'), Blockly.Variables.NAME_TYPE);
     var text_robot_id = block.getFieldValue('ROBOT_ID').toUpperCase();
+    var code = variable_robot + ` =
+await (async function() {
+    var daemon = await getDaemon();
+    return daemon.getRobot(`+text_robot_id+`);
+})();
+__robots.push(`+variable_robot+`);
+`;
+/*
     var code = 'var __daemon = await getDaemon();\n';
     code +=     variable_robot+ ' = await __daemon.getRobot("'+text_robot_id+'");\n';
     code +=    '__robots.push('+variable_robot+');\n';
+*/
     return code;
 };
 
