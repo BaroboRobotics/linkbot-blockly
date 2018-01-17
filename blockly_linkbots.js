@@ -2468,7 +2468,8 @@ Blockly.JavaScript['linkbotjs_text_print'] = function(block) {
   var msg = Blockly.JavaScript.valueToCode(block, 'TEXT',
       Blockly.JavaScript.ORDER_NONE) || '\'\'';
   //return 'window.alert(' + msg + ');\n';
-  return 'consoleInputHandler.print('+msg+');\n';
+  //return 'consoleInputHandler.print('+msg+');\n';
+  return 'app.log('+msg+');\n';
 };
 
 Blockly.Python['linkbotjs_text_print'] = function(block) {
