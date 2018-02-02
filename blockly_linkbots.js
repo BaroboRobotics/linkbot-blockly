@@ -129,6 +129,7 @@ Blockly.JavaScript['linkbotjs_connect_dropdown'] = function(block) {
                '    var __robot = await __daemon.getRobot(\''+text_robot_id+'\');\n' + 
                '    __robot.wheelDiameter = 3.5;\n' + 
                '    __robot.trackWidth = 3.7;\n' + 
+               '    await __robot.setMotorSpeeds(90, 90, 90, 0x07);\n' + 
                '    simulator.proxyRobot(__robot, simulator.operations.getRobot("' + text_robot_id + '"));\n' +
                '    return __robot;\n';
     code +=    '})();\n';
@@ -372,7 +373,11 @@ Blockly.JavaScript['linkbotjs_connect_id'] = function(block) {
     var code = variable_robot + ` =
 await (async function() {
     var daemon = await getDaemon();
-    return daemon.getRobot(`+text_robot_id+`);
+    var __robot = daemon.getRobot(`+text_robot_id+`);
+    await __robot.setMotorSpeeds(90, 90, 90, 0x07);
+    __robot.wheelDiameter = 3.5;
+    __robot.trackWidth = 3.7;
+    return __robot;
 })();
 __robots.push(`+variable_robot+`);
 `;
