@@ -314,12 +314,11 @@ Blockly.JavaScript['linkbotjs_color'] = function(block) {
     var block = 
           'await (function() {\n'
         + '    var color = ' + value_color + ';\n'
-        + '    var red = parseInt(color.substring(1,3), 16);\n'
-        + '    var green = parseInt(color.substring(3,5), 16);\n'
-        + '    var blue = parseInt(color.substring(5,7), 16);\n'
-        + '    return '+value_linkbot+'.setLedColor(red, green, blue);\n'
+        + '    var __red = parseInt(color.substring(1,3), 16);\n'
+        + '    var __green = parseInt(color.substring(3,5), 16);\n'
+        + '    var __blue = parseInt(color.substring(5,7), 16);\n'
+        + '    return '+value_linkbot+'.setLedColor(__red, __green, __blue);\n'
         + '})();\n';
-    //code = value_linkbot + '.color(' + red + ', ' + green + ', ' + blue + ');\n';
     code = block;
     return code;
 };
@@ -372,8 +371,8 @@ Blockly.JavaScript['linkbotjs_connect_id'] = function(block) {
     var text_robot_id = block.getFieldValue('ROBOT_ID').toUpperCase();
     var code = variable_robot + ` =
 await (async function() {
-    var daemon = await getDaemon();
-    var __robot = await daemon.getRobot(`+text_robot_id+`);
+    var __daemon = await getDaemon();
+    var __robot = await __daemon.getRobot(`+text_robot_id+`);
     await __robot.setMotorSpeeds(90, 90, 90, 0x07);
     __robot.wheelDiameter = 3.5;
     __robot.trackWidth = 3.7;
@@ -2551,8 +2550,8 @@ Blockly.JavaScript['linkbotjs_text_prompt_ext'] = function(block) {
   }
   var code = 'await (async function() {\n';
   code +=    'consoleInputHandler.print(' + msg + ');\n';
-  code +=    'var input = await consoleInputHandler.getNextInput()\n';
-  code +=    'return input;\n';
+  code +=    'var __input = await consoleInputHandler.getNextInput()\n';
+  code +=    'return __input;\n';
   code +=    '})()';
   var toNumber = block.getFieldValue('TYPE') == 'NUMBER';
   if (toNumber) {
