@@ -372,7 +372,7 @@ Blockly.JavaScript['linkbotjs_connect_id'] = function(block) {
     var code = variable_robot + ` =
 await (async function() {
     var __daemon = await getDaemon();
-    var __robot = await __daemon.getRobot(`+text_robot_id+`);
+    var __robot = await __daemon.getRobot('`+text_robot_id+`');
     await __robot.setMotorSpeeds(90, 90, 90, 0x07);
     __robot.wheelDiameter = 3.5;
     __robot.trackWidth = 3.7;
