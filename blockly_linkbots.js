@@ -140,8 +140,8 @@ Blockly.Python['linkbotjs_connect_dropdown'] = function(block) {
     var variable_robot = Blockly.Python.variableDB_.getName(block.getFieldValue('ROBOT'), Blockly.Variables.NAME_TYPE);
     var text_linkbot_id = block.getFieldValue('ROBOT_ID');
     var code = variable_robot + ' = linkbot.Linkbot("'+text_linkbot_id+'")\n' + 
-               variable_robot + '.wheelDiameter = 3.5\n' + 
-               variable_robot + '.trackWidth = 3.7\n';
+               variable_robot + '.wheel_diameter = 3.5\n' + 
+               variable_robot + '.track_width = 3.7\n';
     
     return code;
 };
