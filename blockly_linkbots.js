@@ -722,7 +722,7 @@ Blockly.JavaScript['linkbotjs_moveright'] = function(block) {
 
 Blockly.Python['linkbotjs_moveright'] = function(block) {
     var value_linkbot = Blockly.Python.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
-    var code = value_linkbot + '.begin_move(wait=False)\n';
+    var code = value_linkbot + '.set_joint_states(1, 0, 1)\n';
     return code;
 };
 
@@ -759,7 +759,7 @@ Blockly.JavaScript['linkbotjs_moveleft'] = function(block) {
 
 Blockly.Python['linkbotjs_moveleft'] = function(block) {
     var value_linkbot = Blockly.Python.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
-    var code = value_linkbot + '.begin_move(forward=(False, False, False), wait=False)\n';
+    var code = value_linkbot + '.set_joint_states(-1, 0, -1)\n';
     return code;
 };
 
@@ -796,7 +796,7 @@ Blockly.JavaScript['linkbotjs_movebackward'] = function(block) {
 
 Blockly.Python['linkbotjs_movebackward'] = function(block) {
     var value_linkbot = Blockly.Python.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
-    var code = value_linkbot + '.begin_move(forward=(False, False, True), wait=False)\n';
+    var code = value_linkbot + '.set_joint_states(-1, 0, 1)\n';
     return code;
 };
 
@@ -833,7 +833,7 @@ Blockly.JavaScript['linkbotjs_moveforward'] = function(block) {
 
 Blockly.Python['linkbotjs_moveforward'] = function(block) {
     var value_linkbot = Blockly.Python.variableDB_.getName(block.getFieldValue('LINKBOT'), Blockly.Variables.NAME_TYPE);
-    var code = value_linkbot + '.begin_move(forward=(True, True, False), wait=False)\n';
+    var code = value_linkbot + '.set_joint_states(1, 0, -1)\n';
     return code;
 };
 
